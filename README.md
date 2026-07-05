@@ -1,6 +1,6 @@
 # Task Manager CLI
 
-A minimal command-line task manager. Week 1 capstone project.
+A minimal command-line task manager.
 
 ## Commands
 
