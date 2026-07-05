@@ -5,7 +5,6 @@ const path = require('path');
 
 const DB_PATH = path.join(__dirname, 'tasks.json');
 
-// --- Data helpers ---
 
 function readTasks() {
   const raw = fs.readFileSync(DB_PATH, 'utf-8');
@@ -49,6 +48,24 @@ function remove(id) {
   const [removed] = tasks.splice(index, 1);
   writeTasks(tasks);
   console.log(`Removed [${removed.id}] ${removed.title}`);
+}
+
+
+function list(filter) {
+  const tasks = readTasks();
+  let visible = tasks;
+
+  if (filter === 'done')    visible = tasks.filter(t => t.done);
+  if (filter === 'pending') visible = tasks.filter(t => !t.done);
+
+  if (visible.length === 0) {
+    return console.log('No tasks found.');
+  }
+
+  visible.forEach(t => {
+    const status = t.done ? '✓' : '○';
+    console.log(`[${status}] (${t.id}) ${t.title}`);
+  });
 }
 
 function help() {
